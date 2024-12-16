@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px auto;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #ffffff;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Details</h1>
+    <p>Order ID: <%= order_id %></p>
+    <p>Customer ID: <%= customer_id %></p>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < cartItems.length; i++) { %>
+                <tr>
+                   <td> <%= pname[i].product_name %></td> 
+                    <td><%= pname[i].price %></td>
+                    <td><%= cartItems[i].quantity %></td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <p>Total Price: <%= totalPrice %></p>
+    <h1><%= msg %></h1>
+</body>
+</html>

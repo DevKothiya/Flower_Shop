@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f2f2f2;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        h2 {
+            color: #444;
+            margin-top: 30px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+            margin-top: 10px;
+        }
+
+        li {
+            border-bottom: 1px solid #ccc;
+            padding: 10px 0;
+        }
+
+        li:last-child {
+            border-bottom: none;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        .order-info {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .cart-items {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .total-price {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <h1>Order Details</h1>
+
+    <div class="order-info">
+        <h2>Order Information</h2>
+        <p>Order ID: <%= order_id %></p>
+        <p>Customer Name: <%= customer_name %></p>
+        <p>Phone Number: <%= phoneNumber %></p>
+        <p>Email: <%= email %></p>
+    </div>
+
+    <div class="cart-items">
+        <h2>Cart Items</h2>
+        <ul>
+            <% cartItems.forEach(item => { %>
+                <li>
+                    <p>Product ID: <%= item.name %></p>
+                    <p>Price: <%= item.price %></p>
+                    <p>Quantity: <%= item.quantity %></p>
+                </li>
+            <% }); %>
+        </ul>
+    </div>
+
+    <div class="total-price">
+        <h2>Total Price</h2>
+        <p>Total Price: <%= totalPrice %></p>
+    </div>
+</body>
+</html>

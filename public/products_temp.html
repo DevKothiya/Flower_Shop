@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Aclonica&display=swap');
+
+        :root {
+            --blue: #3e2093;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+
+        }
+
+        html {
+            font-size: 62.5%;
+            scroll-behavior: smooth;
+            scroll-padding-top: 6rem;
+            overflow-x: hidden;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: #fff;
+            padding: 2rem 9%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 1000;
+            box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .1);
+
+        }
+
+        header .logo {
+            font-size: 3rem;
+            color: #7984c9;
+            font-weight: bolder;
+            font-family: "Aclonica", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        header .navbar a {
+
+            padding: 3rem 3rem 3rem 3.5rem;
+            color: #666;
+        }
+
+        .navbar {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            gap: 0px;
+            font-size: 20px;
+        }
+
+        header .navbar a:hover {
+            color: var(--blue);
+            text-decoration: underline;
+            color: #3e2093;
+            cursor: pointer;
+        }
+
+        header .icons a {
+            font-size: 2.5rem;
+            color: #333;
+            margin-left: 1.5rem;
+        }
+
+        header .icons a:hover {
+            color: var(--blue);
+        }
+
+        header #toggler {
+            display: none;
+        }
+
+        header .fa-bars {
+            font-size: 3rem;
+            color: #333;
+            border-radius: .5rem;
+            padding: .5rem 1.5rem;
+            cursor: pointer;
+            border: .1rem solid rgba(0, 0, 0, .3);
+            display: none;
+        }
+
+        .cartTab {
+            width: 400px;
+            background-color: #353432;
+            color: #eee;
+            position: fixed;
+            top: 0;
+            right: -400px;
+            bottom: 0;
+            display: grid;
+            grid-template-rows: 70px 1fr 70px;
+            transition: .5s;
+        }
+
+        body.showCart .cartTab {
+            right: 0;
+        }
+
+        body.showCart .container {
+            transform: translateX(-250px);
+        }
+
+        @media (max-width: 991px) {
+            html {
+                font-size: 55%;
+            }
+
+            header {
+                padding: 2rem;
+            }
+
+
+        }
+
+        @media (max-width: 768px) {
+
+            header .fa-bars {
+                display: block;
+
+            }
+
+            header .navbar {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: #eee;
+                border-top: 1rem solid rgba(0, 0, 0, .1);
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+            }
+
+            header #toggler:checked~.navbar {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
+
+            }
+
+
+            header .navbar a {
+                margin: 1.5rem;
+                padding: 1.5rem;
+                background-color: #fff;
+                /* border: 1rem solid rgba(0, 0, 0, .1); */
+
+                display: block;
+            }
+        }
+
+        @media (max-width: 450px) {
+            html {
+                font-size: 50%;
+            }
+
+        }
+
+        body {
+            background-color: rgb(224, 240, 255);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: poppins;
+        }
+
+        a {
+            text-decoration: none;
+            color: black;
+            font-size: 20px;
+        }
+
+
+
+        .container {
+           /* font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;*/
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-gap: 20px;
+            padding-top: 80px;
+            margin-top: 80px;
+
+        }
+
+        .card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 200px;
+            height: 300px;
+            margin-bottom: 30px;
+            margin-left: 10px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            background-color: rgb(238, 240, 243);
+        }
+
+        .button-container {
+            margin-top: 10px;
+
+        }
+
+        #submitCart {
+            font-size: 10px;
+            background-color: aqua;
+            bottom: 10px;
+        }
+
+        .view-details,
+        .add-to-cart {
+            border: none;
+            background-color: #3e2093;
+            color: #fff;
+            padding: 8px 16px;
+            margin: 0 5px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin: 4px;
+            
+        }
+
+        .view-details:hover,
+        .add-to-cart:hover {
+            background-color: #7984c9;
+        }
+
+
+        .card:hover {
+            transform: scale(0.98);
+            background-color: #fff;
+            box-shadow: 0px 5px 10px 0px rgb(0, 0, 0, 0.2);
+        }
+
+
+        .card img {
+            width: 190px;
+            height: 150px;
+            padding: 5px;
+            border-radius: 5px;
+        }
+
+        .card h2 {
+            margin-top: 7px;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .card p {
+            margin-top: 5px;
+            margin-bottom: 5px;
+            font-size: 16px;
+        }
+
+        @media screen and (max-width:780px) {
+            .container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+
+
+                grid-gap: 20px;
+                padding-top: 80px;
+            }
+        }
+
+        @media screen and (max-width:400px) {
+            .container {
+                display: grid;
+                grid-template-columns: 1fr;
+
+
+                grid-gap: 20px;
+                padding-top: 80px;
+
+            }
+
+        }
+
+        #cart {
+            /*font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+ 
+  font-style: normal;*/
+            margin-top: 73px;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            height: 100%;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease-in-out;
+            overflow-y: auto;
+        }
+
+        #cart.visible {
+            right: 0;
+        }
+
+        #cart-items li {
+            list-style: none;
+            margin: 5px 0;
+            padding: 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+        }
+
+        #cart-items li:last-child {
+            border-bottom: none;
+        }
+        #cart {
+            margin-top: 73px;
+            position: fixed;
+            top: 0;
+            right: -300px;
+            height: 100%;
+            width: 300px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            transition: right 0.5s ease-in-out;
+            overflow-y: auto;
+            padding-bottom: 50px; /* Added to accommodate the Submit Cart button */
+        }
+
+        #cart.visible {
+            right: 0;
+        }
+
+     
+
+        #cart-items li:last-child {
+            border-bottom: none;
+        }
+
+        #cart-items li {
+            list-style: none;
+            margin: 5px 0;
+            padding: 0;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-right: 10px;
+            font-size: 18px; /* Increased font size */
+        }
+        
+        #cart-items li input {
+            width: 50px;
+            margin-left: auto;
+            font-size: 16px; /* Increased font size */
+        }
+        #cart-total {
+            font-size: 20px; /* Increased font size */
+        }        
+
+        #submitCart {
+            font-size: 16px; /* Increased font size */
+            background-color: #3e2093;
+            color: #fff;
+            padding: 10px 20px;
+            margin-top: 20px; /* Added margin to separate from cart items */
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: block; /* Ensures button is on its own line */
+            width: 80%; /* Adjust as needed */
+            margin-left: auto; /* Centers the button */
+            margin-right: auto; /* Centers the button */
+            text-align: center; /* Centers text within button */
+            text-decoration: none; /* Removes underlines */
+        }
+        
+        #submitCart:hover {
+            background-color: #7984c9;
+        }
+        #cart-count{
+            font-size: 18px;
+        }
+        .fa-shopping-cart:hover{
+            cursor: pointer;
+            transform: scale(1.04);
+        }
+        .cart-item-image {
+            width: 50px; /* Adjust the width of the images */
+            height: 50px; /* Maintain aspect ratio */
+            border-radius: 5px; /* Add rounded corners */
+            margin-right: 10px; /* Add spacing between image and text */
+        }
+        #cart h1 {
+            font-size: 24px; /* Adjust the font size */
+            font-weight: bold; /* Add bold font weight */
+            margin-bottom: 20px; /* Add margin below the heading */
+            /*color: #3e2093;  Change the text color */
+        }
+        
+        
+    </style>
+</head>
+
+<body>
+    <header>
+        <input type="checkbox" name="" id="toggler">
+        <label for="toggler" class="fas fa-bars"></label>
+        <a href="#" class="logo">
+            Floral Paradise</a>
+        <nav class="navbar">
+            <a href="/">Home</a>
+            <a href="/aboutus">About Us</a>
+            <a href="/contactus">Contact</a>
+            <a href="/help">Help</a>
+        </nav>
+        <div class="icon-cart">
+            <a  class="fas fa-shopping-cart" onclick="toggleCart()"></a>
+            <span id="cart-count" >0</span>
+        </div>
+    </header>
+    <!-- container of cards -->
+    <div class="container">
+
+        <!-- flower1 -->
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtNvkta8-f7gFB4bCUMx7-OyWnzQ1hxC946A&s"
+                alt="lily">
+            <h2>Lily</h2>
+            <p>Rs. 14.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F001';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Lily','F001', 14.99)">Add to Cart</button>
+
+        </div>
+
+        <!-- flower2 -->
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyu3Q-C3HyHHL-Dr5-JzYCZg6jtw6L7pgOA&s"
+                alt="sunflower">
+            <h2>Sunflower</h2>
+            <p>Rs. 11.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F002';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Sunflower','F002', 11.99)">Add to Cart</button>
+        </div>
+
+        <!-- flower3 -->
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3QdZYANhH7rcmO1LBK65U47VLyRdoTx6PQ&s"
+                alt="rose">
+            <h2>Rose</h2>
+            <p>Rs. 12.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F003';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Rose','F003', 12.99)">Add to Cart</button>
+        </div>
+
+        <!-- flower4 -->
+        <div class="card">
+
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2vweNWJ6bUhvc-FCHpB8YVW_aY0xlkULTBA&s"
+                alt="orchid">
+            <h2>Orchid</h2>
+            <p>Rs. 19.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F004';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Orchid','F004', 19.99)">Add to Cart</button>
+        </div>
+
+        <!-- flower5 -->
+
+        <div class="card">
+            <img src="https://hips.hearstapps.com/hmg-prod/images/english-daisy-types-1586980894.jpg?crop=1.00xw:0.836xh;0,0.164xh&resize=980:*"
+                alt="daisy">
+            <h2>Daisy</h2>
+            <p>Rs. 8.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F005';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Daisy','F005', 8.99)">Add to Cart</button>
+        </div>
+
+        <!-- flower6 -->
+
+        <div class="card">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlV1GfFPG_q-tV_Ga6ARhocPR2mdGT13myMg&s"
+                alt="tulip">
+            <h2>Tulip</h2>
+            <p>Rs. 9.99</p>
+            <button class="view-details" onclick="window.location.href= '/product/F006';">View Details</button>
+            <button class="add-to-cart" onclick="addToCart('Tulip','F006', 9.99)">Add to Cart</button>
+        </div>
+
+
+    </div>
+    <div id="cart">
+        <h1>Shopping Cart</h1>
+        <ul id="cart-items"></ul>
+        <h1>Total: <span id="cart-total">$0.00</span></h1>
+        <a href="/booknow" id="submitCart">Submit Cart</a>
+    </div>
+
+    <script>
+        let cartItems = [];
+        let totalPrice = 0;
+
+        function addToCart(productName, pid, price) {
+            let found = false;
+            cartItems.forEach(item => {
+                if (item.name === productName) {
+                    item.quantity++;
+                    found = true;
+                }
+            });
+            if (!found) {
+                cartItems.push({ name: productName, product_id: pid, price: price, quantity: 1 });
+            }
+            totalPrice += price;
+            updateCart();
+            updateCartCount(); // Update cart count
+        }
+
+        function updateCart() {
+            let cartItemsElement = document.getElementById('cart-items');
+            let cartTotalElement = document.getElementById('cart-total');
+            cartItemsElement.innerHTML = '';
+            cartItems.forEach(item => {
+                if (item.quantity > 0) {
+                    let li = document.createElement('li');
+                    let image = document.createElement('img');
+                    image.src = getProductImage(item.product_id); // Get the product image URL
+                    image.alt = item.name;
+                    image.classList.add('cart-item-image'); // Add a CSS class to the image
+                    li.appendChild(image); // Append the image to the list item
+                    li.innerHTML += `${item.name} - $${item.price.toFixed(2)} 
+                    <input type="number" min="0" value="${item.quantity}" onchange="updateQuantity('${item.name}', this.value)">`;
+                    cartItemsElement.appendChild(li); // Append the list item to the cart items
+                }
+            });
+            cartTotalElement.textContent = `${totalPrice.toFixed(2)}`;
+        }
+        
+
+        function updateQuantity(productName, quantity) {
+            cartItems.forEach((item, index) => {
+                if (item.name === productName) {
+                    let priceDifference = (quantity - item.quantity) * item.price;
+                    totalPrice += priceDifference;
+                    item.quantity = parseInt(quantity);
+                    if (quantity == 0) {
+                        cartItems.splice(index, 1);
+                    }
+                }
+            });
+            console.log(cartItems)
+            updateCart();
+            updateCartCount();
+        }
+
+ 
+        function updateCartCount() {
+            let cartCountElement = document.getElementById('cart-count');
+            let totalCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+            cartCountElement.textContent = totalCount;
+        }   
+
+        function toggleCart() {
+            let cart = document.getElementById('cart');
+            cart.classList.toggle('visible');
+        }
+
+        function getProductImage(productId) {
+            switch (productId) {
+                case 'F001':
+                    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtNvkta8-f7gFB4bCUMx7-OyWnzQ1hxC946A&s';
+                case 'F002':
+                    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlyu3Q-C3HyHHL-Dr5-JzYCZg6jtw6L7pgOA&s';
+                case 'F003':
+                    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo3QdZYANhH7rcmO1LBK65U47VLyRdoTx6PQ&s';
+                case 'F004':
+                    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2vweNWJ6bUhvc-FCHpB8YVW_aY0xlkULTBA&s';
+                case 'F005':
+                    return 'https://hips.hearstapps.com/hmg-prod/images/english-daisy-types-1586980894.jpg?crop=1.00xw:0.836xh;0,0.164xh&resize=980:*';
+                case 'F006':
+                    return 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlV1GfFPG_q-tV_Ga6ARhocPR2mdGT13myMg&s';
+                default:
+                    return ''; // If no matching product ID is found, return an empty string or a default image URL
+            }
+        }
+        
+        document.getElementById('submitCart').addEventListener('click', function () {
+            console.log(cartItems);
+            fetch('/product', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ cartItems: cartItems })
+
+            })
+                .then(response => response.json())
+                .then(data => {
+                    alert(data.message);
+
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        });
+
+
+    </script>
+
+
+
+</body>
+
+</html>
